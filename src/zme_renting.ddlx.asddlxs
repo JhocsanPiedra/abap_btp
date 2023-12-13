@@ -1,0 +1,97 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    typeName: 'Coche',
+    typeNamePlural: 'Coches',
+    typeImageUrl: '',
+    imageUrl: 'Imagen',
+    title: {
+        type: #STANDARD,
+        label: '',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Marca',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    },
+    description: {
+        type: #STANDARD,
+        label: '',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Modelo',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    }
+}
+@Search.searchable: true // Etiqueta para que permita busquedas con wildcard *Jhoc*
+annotate view Z_I_Renting
+    with 
+{
+@UI.facet: [{ id: 'DetallesVehiculo'/* ID Pestaña*/, label: 'Detalles del Auto', type: #COLLECTION /* Especifica que es una pestaña nueva */, position: 10}, // Definición en pantalla
+            { id: 'CaracteristicasAuto', parentId: 'DetallesVehiculo'/* Header de la pestaña que pertenece */, label: 'Características del Auto',
+             type: #FIELDGROUP_REFERENCE /* Sirve para mostrar los campos en esta pestaña */, targetQualifier: 'DetallesVehiculo' /* ID para añadir */, position: 10},
+            { id: 'Cliente', label: 'Clientes', type: #LINEITEM_REFERENCE, targetElement: '_DetCus', position: 20 }
+            ]
+@UI.fieldGroup: [{ qualifier: 'DetallesVehiculo'/* ID al que pertenecen */, position: 10 }] // Definición de Campos
+Matricula;
+
+
+@UI: {  lineItem: [{ position: 10, importance: #HIGH /* Importancia en Resposive */}],
+        selectionField: [{ position: 10 }] }
+@Consumption.valueHelpDefinition: [{ entity: { name: 'z_b_brands'/* Data Source Name */, element: 'Marca' /* Data Source Field */ } }]
+Marca;
+
+@UI.lineItem: [{ position: 20, importance: #HIGH }]
+@Search: {
+    defaultSearchElement: true,
+    ranking: #MEDIUM,
+    fuzzinessThreshold: 0.8
+}
+Modelo;
+
+@UI.lineItem: [{ position: 30, importance: #MEDIUM }]
+@Search: {
+    defaultSearchElement: true,
+    ranking: #MEDIUM,
+    fuzzinessThreshold: 0.8
+}
+Color;
+
+@UI.lineItem: [{ position: 40, importance: #LOW }]
+Motor;
+
+@UI.lineItem: [{ position: 50, importance: #LOW }]
+Potencia;
+
+@UI: {  lineItem: [{ position: 60, importance: #HIGH }],
+        selectionField: [{ position: 20 }] }
+Precio;
+
+@UI.lineItem: [{ position: 70, importance: #HIGH }]
+Moneda;
+
+@UI.lineItem: [{ position: 80, importance: #HIGH }]
+Alquilado;
+
+@UI.lineItem: [{ position: 20, importance: #HIGH, label: 'Días Restantes', criticality: 'DiasRestantes' /* Define un 1=Error, 2=Warning, 3=Success */ }]
+DiasRestantes;
+
+
+@UI.fieldGroup: [{ qualifier: 'DetallesVehiculo', position: 20 }] // Definición de Campos
+Combustible;
+
+@UI.fieldGroup: [{ qualifier: 'DetallesVehiculo', position: 30 }] // Definición de Campos
+Consumo;
+
+@UI.fieldGroup: [{ qualifier: 'DetallesVehiculo', position: 40 }] // Definición de Campos
+FechaFabricacion;
+
+@UI.fieldGroup: [{ qualifier: 'DetallesVehiculo', position: 50 }] // Definición de Campos
+Puertas;
+
+    
+}
